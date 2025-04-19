@@ -15,7 +15,7 @@ export default async function handler(request, response) {
     return response.status(405).json({ message: 'Method Not Allowed' });
   }
 
-  const form = formidable({ keepExtensions: true }); // keepExtensions ist nützlich
+  const form = formidable({ keepExtensions: true }); // keepExtensions ist sehr nützlich
 
   try {
     const [fields, files] = await form.parse(request);
