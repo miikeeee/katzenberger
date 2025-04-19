@@ -1,6 +1,7 @@
 // api/upload-heizkoerper.js
 import { formidable } from 'formidable';
 import axios from 'axios';
+import { put } from '@vercel/blob';
 
 // WICHTIG: Body Parser deaktivieren für File Uploads
 export const config = {
