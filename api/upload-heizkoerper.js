@@ -51,7 +51,32 @@ export default async function handler(request, response) {
         }
         // --- Ende Vercel Blob Upload ---
 
-        // ... (Webhook Trigger wie vorher) ...
+        const webhookUrl = process.env.HEIZKOERPER_WEBHOOK_URL; 
+        if (!webhookUrl) { /* ... Fehler ... */ }
+    
+        // DIESES OBJEKT WIRD AN MAKE.COM GESENDET
+        const webhookPayload = {
+            event: 'heizkoerper_upload_received', // Damit Make weiß, was passiert ist
+            filename: originalFilename,          // Der ursprüngliche Dateiname
+            storedFilename: safeFilename,        // Der Name im Blob Storage (falls du Suffix nutzt)
+            mimeType: uploadedFile.mimetype,     // Der Dateityp
+            sizeBytes: uploadedFile.size,          // Die Dateigröße
+            fileUrl: blobUrl, // <<< DAS IST DER SCHLÜSSEL! Die URL zur Datei
+            uploadContext: context,
+            // Du kannst hier noch weitere Daten aus `fields` hinzufügen, falls nötig
+            // z.B. userId: fields.userId ? fields.userId[0] : null,
+        };
+    
+        console.log(`INFO: Trigger Heizkörper Webhook: ${webhookUrl}`);
+        console.log(`INFO: Sende Payload an Webhook:`, webhookPayload); // Logge den Payload zur Kontrolle!
+        
+        try {
+            const webhookResponse = await axios.post(webhookUrl, webhookPayload); // Sende den Payload
+            console.log(`INFO: Webhook Trigger Response Status: ${webhookResponse.status}`);
+        } catch (webhookError) {
+            console.error("FEHLER beim Senden des Webhooks:", webhookError.message);
+            throw new Error(`Webhook konnte nicht gesendet werden: ${webhookError.message}`);
+        }
 
         console.log("INFO: Alles erfolgreich abgeschlossen.");
         return response.status(200).json({ /*...*/ });
