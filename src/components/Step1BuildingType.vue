@@ -9,8 +9,8 @@ const selectType = (type) => store.setBuildingType(type);
   <div>
     <h3 class="h5 text-center mb-4">Schritt 1: Wählen Sie Ihr Anliegen</h3>
     <div class="row g-3 justify-content-center">
-      {/* ... EFH, MFH, Gewerbe Optionen wie vorher ... */}
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3"> {/* Angepasst für 4 Elemente */}
+
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3"> 
            <div @click="selectType('efh')" class="card h-100 text-center building-option">
              <div class="card-body d-flex flex-column align-items-center">
                 <img src="/images/efh.png" alt="Einfamilienhaus" class="building-image mb-2">
@@ -35,11 +35,11 @@ const selectType = (type) => store.setBuildingType(type);
            </div>
          </div>
 
-      {/* NEU: Heizkörper Option */}
+
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
         <div @click="selectType('heizkoerper')" class="card h-100 text-center building-option">
           <div class="card-body d-flex flex-column align-items-center">
-             {/* Erstelle ein passendes Bild: /public/images/heizkoerper.png */}
+
             <img src="/images/heizkoerper.png" alt="Heizkörper Upload" class="building-image mb-2">
             <span class="building-label mt-auto">Heizkörper Info Upload</span>
           </div>
